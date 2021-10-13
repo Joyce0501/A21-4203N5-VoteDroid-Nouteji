@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:layout_margin="30dp"
     tools:context=".MainActivity">
+
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="47dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -16,8 +17,8 @@
 
     <Button
         android:id="@+id/buttonAjouter"
-        android:layout_width="286dp"
-        android:layout_height="87dp"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
         android:text="@string/main_button_Ajouter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
