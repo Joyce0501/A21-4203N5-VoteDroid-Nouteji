@@ -1,5 +1,6 @@
 package com.example.votedroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -21,5 +22,13 @@ public class QuestionActivity extends AppCompatActivity {
         binding = ActivityQuestionBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        binding.buttonPoser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent accueil = new Intent(QuestionActivity.this,MainActivity.class);
+                startActivity(accueil);
+            }
+        });
     }
 }
