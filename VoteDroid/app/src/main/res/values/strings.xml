@@ -6,4 +6,5 @@
     <string name="question_PoserQuestion">Pose La Question</string>
     <string name="vote_preambule">"Que penses-tu de la programmation?"</string>
     <string name="vote_bouton">"vote"</string>
+    <string name="resultats_preambule">"C'est comment la programmation Androide?"</string>
 </resources>
