@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.NumberPicker;
@@ -30,12 +31,29 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-    /*    listView=(ListView)findViewById(R.id.listquestion);
-        ArrayList<String> Questions = new ArrayList<>();
-        Questions.add("joyce");
-        Questions.add("Fait il beau aujourdhui");
+        listView = findViewById(R.id.listquestion);
+        String[] values = new String[]{"Quelle est la définition d’un système informatique?",
+                "Quels sont les composants de base d’un système informatique?",
+        "Qu’est-ce qu’un microprocesseur?",
+        "Nommez quelques-uns des derniers processeurs informatiques?",
+        "Quelle est la différence entre un processeur 32 bits et un processeur 64 bits?"};
 
-        ArrayAdapter QuestionAdapter = new ArrayAdapter(this,android.res.layout.simple_List_item_1,Questions); */
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1,values);
+
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position >= 0 ){
+                    Intent vote = new Intent(MainActivity.this,VoteActivity.class);
+                    startActivity(vote);
+                }
+            }
+        });
 
         binding.buttonAjouter.setOnClickListener(new View.OnClickListener() {
             @Override

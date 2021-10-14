@@ -4,4 +4,6 @@
     <string name="main_button_Ajouter">Ajouter</string>
     <string name="question_TaQuestion">Ta question</string>
     <string name="question_PoserQuestion">Pose La Question</string>
+    <string name="vote_preambule">"Que penses-tu de la programmation?"</string>
+    <string name="vote_bouton">"vote"</string>
 </resources>
