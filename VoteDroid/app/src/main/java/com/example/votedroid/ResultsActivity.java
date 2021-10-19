@@ -57,11 +57,17 @@ public class ResultsActivity extends AppCompatActivity {
 
         /* Data and function call to bind the data to the graph */
         Map<Integer, Integer> dataGraph = new HashMap<Integer, Integer>() {{
-            put(5, 10);
+            put(0,0);
+            put(1,0);
+            put(2,0);
+            put(3,2);
+            put(4,1);
+            put(5,4);
+          /*  put(5, 10);
             put(3, 3);
             put(7, 2);
             put(2, 1);
-            put(9, 0);
+            put(9, 0); */
         }};
         setData(dataGraph);
     }
