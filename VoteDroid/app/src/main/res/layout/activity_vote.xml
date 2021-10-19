@@ -9,12 +9,18 @@
     <TextView
         android:id="@+id/LaQuestion"
         android:layout_width="300dp"
-        android:layout_height="100dp"
+        android:layout_height="62dp"
         android:orientation="vertical"
-        tools:context=".VoteActivity"
         android:text="@string/vote_preambule"
-        android:textSize="30dp"
-        />
+        android:textSize="20dp"
+        tools:context=".VoteActivity" />
+
+
+<RatingBar
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/etoiles"
+    />
 
     <EditText
         android:id="@+id/editNom"

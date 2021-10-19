@@ -12,7 +12,25 @@
         android:layout_height="112dp"
         android:orientation="vertical"
         android:text="@string/resultats_preambule"
-        android:textSize="30dp"
+        android:textSize="20dp"
+        tools:context=".VoteActivity" />
+
+    <TextView
+        android:id="@+id/LaMoyenne"
+        android:layout_width="300dp"
+        android:layout_height="112dp"
+        android:orientation="vertical"
+        android:text="@string/resultats_preambule"
+        android:textSize="20dp"
+        tools:context=".VoteActivity" />
+
+    <TextView
+        android:id="@+id/EcartType"
+        android:layout_width="300dp"
+        android:layout_height="112dp"
+        android:orientation="vertical"
+        android:text="@string/resultats_preambule"
+        android:textSize="20dp"
         tools:context=".VoteActivity" />
 
 </LinearLayout>
