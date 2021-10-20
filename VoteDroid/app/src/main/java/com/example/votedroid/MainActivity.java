@@ -13,6 +13,8 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.votedroid.databinding.ActivityMainBinding;
 
@@ -21,8 +23,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
+    QuestionAdapter adapter;
 
-    ListView listView;
+  //  ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        listView = findViewById(R.id.listquestion);
+     /*   listView = findViewById(R.id.listquestion);
         String[] values = new String[]{"Quelle est la définition d’un système informatique?",
                 "Quels sont les composants de base d’un système informatique?",
         "Qu’est-ce qu’un microprocesseur?",
@@ -55,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(vote);
                 }
             }
-        });
+        }); */
+        this.initRecycler();
+        this.remplirRecycler();
 
 
 
@@ -70,6 +75,29 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void initRecycler()
+    {
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        recyclerView.setHasFixedSize(true);
+
+        //use a linear layout manager
+        LinearLayoutManager layoutManager= new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        //specify an adapter
+        adapter = new QuestionAdapter();
+        recyclerView.setAdapter(adapter);
+    }
+    private void remplirRecycler(){
+       for(int i = 0; i <= 20; i++)
+       {
+           Questions q = new Questions();
+           q.questions = "Question" + i;
+           adapter.list.add(q);
+       }
+
+       adapter.notifyDataSetChanged();
+    }
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
