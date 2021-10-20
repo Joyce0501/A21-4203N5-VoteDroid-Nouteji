@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
-    QuestionAdapter adapter;
+    QuestionsAdapter adapter;
 
   //  ListView listView;
 
@@ -36,29 +36,6 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-     /*   listView = findViewById(R.id.listquestion);
-        String[] values = new String[]{"Quelle est la définition d’un système informatique?",
-                "Quels sont les composants de base d’un système informatique?",
-        "Qu’est-ce qu’un microprocesseur?",
-        "Nommez quelques-uns des derniers processeurs informatiques?",
-        "Quelle est la différence entre un processeur 32 bits et un processeur 64 bits?"};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1,values);
-
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if(position >= 0 ){
-                    Intent vote = new Intent(MainActivity.this,VoteActivity.class);
-                    startActivity(vote);
-                }
-            }
-        }); */
         this.initRecycler();
         this.remplirRecycler();
 
@@ -85,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         //specify an adapter
-        adapter = new QuestionAdapter();
+        adapter = new QuestionsAdapter();
         recyclerView.setAdapter(adapter);
     }
     private void remplirRecycler(){

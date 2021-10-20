@@ -1,8 +1,12 @@
 package com.example.votedroid;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
+public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.ViewHolder> {
 
     public List<Questions> list;
 
@@ -18,13 +22,15 @@ class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView textView;
-        public ViewHolder(TextView view) {
+        public TextView textViewQuestion;
+        public ImageButton Image;
+        public ViewHolder(LinearLayout view) {
             super(view);
             // Define click listener for the ViewHolder's View
-            textView = view;
+            textViewQuestion = view.findViewById(R.id.tvQuestion);
+            Image = view.findViewById(R.id.imgbutton);
         }
 
      /*   public TextView getTextView() {
@@ -32,15 +38,15 @@ class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
         }  */
     }
 
-    public QuestionAdapter() {
+    public QuestionsAdapter() {
         list = new ArrayList<>();
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public QuestionAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public QuestionsAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType)  {
         // Create a new view, which defines the UI of the list item
-        TextView v = (TextView) LayoutInflater.from(viewGroup.getContext())
+         LinearLayout v = (LinearLayout) LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.question_item, viewGroup, false);
 
         ViewHolder vh = new ViewHolder(v);
@@ -54,7 +60,8 @@ class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         Questions questionactuel = list.get(position);
-        viewHolder.textView.setText(questionactuel.questions);
+        viewHolder.textViewQuestion.setText(questionactuel.questions);
+   
     }
 
     // Return the size of your list (invoked by the layout manager)

@@ -15,7 +15,9 @@
         <activity
             android:name=".VoteActivity"
             android:exported="false" />
-        <activity android:name=".QuestionActivity" />
+        <activity
+            android:name=".QuestionActivity"
+            android:exported="false"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
