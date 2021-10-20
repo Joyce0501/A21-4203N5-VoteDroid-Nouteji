@@ -9,14 +9,18 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.votedroid.databinding.ActivityQuestionBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.ViewHolder> {
+public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.ViewHolder>  {
 
     public List<Questions> list;
+
 
     /**
      * Provide a reference to the type of views that you are using
@@ -61,7 +65,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
         // contents of the view with that element
         Questions questionactuel = list.get(position);
         viewHolder.textViewQuestion.setText(questionactuel.questions);
-   
+
     }
 
     // Return the size of your list (invoked by the layout manager)
