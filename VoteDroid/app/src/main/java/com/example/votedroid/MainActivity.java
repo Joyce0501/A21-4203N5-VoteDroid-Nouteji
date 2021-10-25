@@ -40,11 +40,11 @@ public class MainActivity extends AppCompatActivity {
         this.remplirRecycler();
 
 
-
+//ne pas oublier de remttre QuestionActivity
         binding.buttonAjouter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ajouter = new Intent(MainActivity.this, QuestionActivity.class);
+                Intent ajouter = new Intent(MainActivity.this, ResultsActivity.class);
                 startActivity(ajouter);
             }
         });
