@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        binding.recyclerview.addItemDecoration(new DividerItemDecoration(MainActivity.this,DividerItemDecoration.VERTICAL));
+
         this.initRecycler();
         this.remplirRecycler();
 
@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         //specify an adapter
         adapter = new QuestionsAdapter();
         recyclerView.setAdapter(adapter);
+
+        binding.recyclerview.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.VERTICAL));
     }
     private void remplirRecycler(){
         for(int i = 1; i <= 20; i++)
