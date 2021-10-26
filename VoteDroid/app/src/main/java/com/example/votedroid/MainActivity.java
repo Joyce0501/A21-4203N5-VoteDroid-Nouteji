@@ -13,6 +13,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        binding.recyclerview.addItemDecoration(new DividerItemDecoration(MainActivity.this,DividerItemDecoration.VERTICAL));
         this.initRecycler();
         this.remplirRecycler();
 
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         binding.buttonAjouter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ajouter = new Intent(MainActivity.this, ResultsActivity.class);
+                Intent ajouter = new Intent(MainActivity.this, QuestionActivity.class);
                 startActivity(ajouter);
             }
         });
@@ -66,13 +68,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
     private void remplirRecycler(){
-       for(int i = 0; i <= 20; i++)
-       {
-           Questions q = new Questions();
-           q.questions = "Question" + i;
-           adapter.list.add(q);
-       }
-
+        for(int i = 1; i <= 20; i++)
+        {
+            Questions q = new Questions();
+            q.questions = "Question " + i;
+            adapter.list.add(q);
+        }
        adapter.notifyDataSetChanged();
     }
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,17 +30,16 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView textViewQuestion;
-        public ImageButton Image;
+        public View Image;
+        public LinearLayout linearLayout;
+
         public ViewHolder(LinearLayout view) {
             super(view);
             // Define click listener for the ViewHolder's View
             textViewQuestion = view.findViewById(R.id.tvQuestion);
             Image = view.findViewById(R.id.imgbutton);
+            linearLayout = view;
         }
-
-     /*   public TextView getTextView() {
-            return textView;
-        }  */
     }
 
     public QuestionsAdapter() {
@@ -65,8 +65,24 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
         // contents of the view with that element
         Questions questionactuel = list.get(position);
         viewHolder.textViewQuestion.setText(questionactuel.questions);
+        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent voter = new Intent(view.getContext(),VoteActivity.class);
+                view.getContext().startActivity(voter);
+            }
+        });
+
+        viewHolder.Image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent results = new Intent(view.getContext(),ResultsActivity.class);
+                view.getContext().startActivity(results);
+            }
+        });
 
     }
+
 
     // Return the size of your list (invoked by the layout manager)
     @Override
