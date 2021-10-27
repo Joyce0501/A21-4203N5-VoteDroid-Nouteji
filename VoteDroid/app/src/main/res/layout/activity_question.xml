@@ -13,18 +13,22 @@
         android:textAlignment="textStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
        />
 
     <EditText
         android:id="@+id/edit"
         android:layout_width="match_parent"
         android:hint="Pose ta question"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"/>
 
     <Button
         android:id="@+id/buttonPoser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/question_PoserQuestion" />
+        android:text="@string/question_PoserQuestion"
+        android:layout_margin="30dp"/>
 
 </LinearLayout>

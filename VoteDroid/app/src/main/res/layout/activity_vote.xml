@@ -6,40 +6,38 @@
     android:orientation="vertical"
     tools:context=".VoteActivity">
 
+
     <TextView
         android:id="@+id/LaQuestion"
         android:layout_width="300dp"
         android:layout_height="62dp"
+        android:layout_marginLeft="40dp"
         android:orientation="vertical"
         android:text="@string/vote_preambule"
         android:textSize="20dp"
+        android:layout_marginTop="40dp"
         tools:context=".VoteActivity" />
 
-
-<RatingBar
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/etoiles"
-    />
+    <RatingBar
+        android:id="@+id/etoiles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"/>
 
     <EditText
         android:id="@+id/editNom"
+        android:layout_width="318dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp"
         android:hint="Nom du votant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        />
 
     <Button
         android:id="@+id/buttonVote"
-        android:layout_width="match_parent"
+        android:layout_width="386dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:text="@string/vote_bouton" />
-
-    <Button
-        android:id="@+id/buttonResultats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Resultats"
-        />
-
 
 </LinearLayout>

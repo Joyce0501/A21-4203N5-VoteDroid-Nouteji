@@ -10,23 +10,27 @@
     <TextView
         android:id="@+id/LaQuestion"
         android:layout_width="300dp"
-        android:layout_height="112dp"
+        android:layout_height="50dp"
         android:orientation="vertical"
         android:text="@string/resultats_preambule"
         android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
         tools:context=".VoteActivity" />
 
     <TextView
         android:id="@+id/LaMoyenne"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:text="La moyenne                             : 4.29"
+        android:layout_margin="20dp"
         tools:context=".VoteActivity" />
 
     <TextView
         android:id="@+id/EcartType"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
         android:text="Écart type                                  : 0.88"
         tools:context=".VoteActivity" />
 

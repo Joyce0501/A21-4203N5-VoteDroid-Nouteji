@@ -7,7 +7,6 @@
     <item android:id="@+id/action_poptoast" android:title="@string/action_poptoast"
         android:orderInCategory="100" app:showAsAction="never" />
 
-    <item android:id="@+id/action_search"
-        android:title="@string/action_search" app:showAsAction="ifRoom" />
+
 
 </menu>

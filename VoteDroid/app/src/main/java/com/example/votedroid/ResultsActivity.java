@@ -26,6 +26,7 @@ public class ResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
+        setTitle("Résultats");
 
 
         chart = findViewById(R.id.chart);

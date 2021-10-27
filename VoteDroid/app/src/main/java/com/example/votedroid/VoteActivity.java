@@ -42,13 +42,5 @@ public class VoteActivity extends AppCompatActivity {
             }
         });
 
-        binding.buttonResultats.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent results = new Intent(VoteActivity.this, ResultsActivity.class);
-                startActivity(results);
-            }
-        });
-
     }
 }
