@@ -22,7 +22,7 @@
         android:id="@+id/LaMoyenne"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:text="La moyenne                             : 4.29"
+        android:text="Moyenne:                              4.29"
         android:layout_margin="20dp"
         tools:context=".VoteActivity" />
 
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginLeft="20dp"
-        android:text="Écart type                                  : 0.88"
+        android:text="Écart type:                             0.88"
         tools:context=".VoteActivity" />
 
     <com.github.mikephil.charting.charts.BarChart
