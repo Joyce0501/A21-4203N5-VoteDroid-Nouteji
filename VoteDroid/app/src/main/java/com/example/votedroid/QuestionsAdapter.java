@@ -14,13 +14,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.votedroid.databinding.ActivityQuestionBinding;
+import com.example.votedroid.modele.VDQuestion;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.ViewHolder>  {
 
-    public List<Questions> list;
+    public List<VDQuestion> list;
 
 
     /**
@@ -63,8 +64,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        Questions questionactuel = list.get(position);
-        viewHolder.textViewQuestion.setText(questionactuel.questions);
+        VDQuestion questionactuel = list.get(position);
+        viewHolder.textViewQuestion.setText(questionactuel.texteQuestion);
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

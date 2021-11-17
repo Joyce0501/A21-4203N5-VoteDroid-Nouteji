@@ -3,6 +3,7 @@ package com.example.votedroid;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
+import com.example.votedroid.bd.BD;
 import com.example.votedroid.databinding.ActivityMainBinding;
+import com.example.votedroid.exceptions.MauvaiseQuestion;
+import com.example.votedroid.modele.VDQuestion;
+import com.example.votedroid.service.ServiceImplementation;
 
 import java.util.ArrayList;
 
@@ -25,12 +31,22 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     QuestionsAdapter adapter;
+    private ServiceImplementation service;
+    private BD maBD;
 
-  //  ListView listView;
+
+    //  ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        maBD =  Room.databaseBuilder(getApplicationContext(), BD.class, "BDQuestions")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
+        service = ServiceImplementation.getInstance(maBD);
+        //creerQuestion();
 
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -70,10 +86,10 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerview.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.VERTICAL));
     }
     private void remplirRecycler(){
-        for(int i = 1; i <= 20; i++)
+        for(VDQuestion unequestion : maBD.monDao().toutesLesQuestions())
         {
-            Questions q = new Questions();
-            q.questions = "Question " + i;
+            VDQuestion q = new VDQuestion();
+            q.texteQuestion = unequestion.texteQuestion;
             adapter.list.add(q);
         }
        adapter.notifyDataSetChanged();
@@ -83,5 +99,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
 
 }
