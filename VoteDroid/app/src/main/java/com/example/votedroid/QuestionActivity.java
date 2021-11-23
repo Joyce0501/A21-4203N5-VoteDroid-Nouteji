@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,16 +43,16 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent accueil = new Intent(QuestionActivity.this,MainActivity.class);
                 startActivity(accueil);
-                creerQuestion();
-            }
-
-            private void creerQuestion (){
                 try{
                     VDQuestion maQuestion = new VDQuestion();
                     maQuestion.texteQuestion = binding.edit.getText().toString();
                     service.creerQuestion(maQuestion);
-                }catch (MauvaiseQuestion m){
-                    Log.e("CREERQUESTION", "Impossible de créer la question : " + m.getMessage());
+                }
+                catch (MauvaiseQuestion maQuestion){
+//                    Log.e("CREERQUESTION", "Impossible de créer la question : " + maQuestion.getMessage());
+                    Toast.makeText(QuestionActivity.this, maQuestion.getMessage(), Toast.LENGTH_SHORT).show();
+                    Intent question = new Intent(QuestionActivity.this,QuestionActivity.class);
+                    startActivity(question);
                 }
             }
         });

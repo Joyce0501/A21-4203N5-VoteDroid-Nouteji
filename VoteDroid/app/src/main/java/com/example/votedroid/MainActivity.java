@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(ajouter);
             }
         });
-
-
     }
 
     public void initRecycler()
@@ -85,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding.recyclerview.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.VERTICAL));
     }
+
     private void remplirRecycler(){
         for(VDQuestion unequestion : maBD.monDao().toutesLesQuestions())
         {
@@ -94,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         }
        adapter.notifyDataSetChanged();
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
