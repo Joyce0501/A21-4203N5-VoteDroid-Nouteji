@@ -98,6 +98,52 @@ public class TestsApplication {
         Assert.fail("Exception MauvaiseQuestion non lancée");
     }
 
+    @Test(expected = MauvaisVote.class)
+    public void ajoutNomVotantKOVide() throws MauvaisVote {
+        VDVote vote = new VDVote();
+        vote.nomVotant = "";
+        service.creerVote(vote);
+
+        Assert.fail("Exception MauvaisVote non lancée");
+    }
+
+    @Test(expected = MauvaisVote.class)
+    public void ajoutNomVotantKOCourt() throws MauvaisVote {
+        VDVote vote = new VDVote();
+        vote.nomVotant = "aa";
+        service.creerVote(vote);
+
+        Assert.fail("Exception MauvaisVote non lancée");
+    }
+
+    @Test(expected = MauvaisVote.class)
+    public void ajoutNomVotantKOLong() throws MauvaisVote {
+        VDVote vote = new VDVote();
+        for (int i = 0 ; i < 256 ; i ++) vote.nomVotant += "aa";
+        service.creerVote(vote);
+
+        Assert.fail("Exception MauvaisVote non lancée");
+    }
+
+    @Test(expected = MauvaisVote.class)
+    public void ajoutVoteKOIDFixe() throws MauvaisVote {
+        VDVote vote = new VDVote();
+        vote.nomVotant = "aa";
+        vote.idVote = 5L;
+        service.creerVote(vote);
+
+
+        Assert.fail("Exception MauvaisVote non lancée");
+    }
+
+    @Test
+    public void ajoutVoteOK() throws MauvaisVote {
+        VDVote vote = new VDVote();
+        vote.nomVotant = "joyce";
+        service.creerVote(vote);
+
+        Assert.assertNotNull(vote.idVote);
+    }
 
     /*
     @After

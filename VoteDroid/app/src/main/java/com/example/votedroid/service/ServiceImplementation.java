@@ -1,6 +1,7 @@
 package com.example.votedroid.service;
 
 import com.example.votedroid.bd.BD;
+import com.example.votedroid.exceptions.MauvaisVote;
 import com.example.votedroid.exceptions.MauvaiseQuestion;
 import com.example.votedroid.modele.VDQuestion;
 import com.example.votedroid.modele.VDVote;
@@ -46,8 +47,18 @@ public class ServiceImplementation {
     }
 
     
-    public void creerVote(VDVote vdVote) {
+    public void creerVote(VDVote vdVote) throws MauvaisVote {
+        // Validation
+        if (vdVote.nomVotant == null || vdVote.nomVotant.trim().length() == 0) throw new MauvaisVote("Nom du votant inexistant");
+        if (vdVote.nomVotant.trim().length() < 4) throw new MauvaisVote("Nom du votant trop court");
+        if (vdVote.nomVotant.trim().length() > 256) throw new MauvaisVote("Nom du votant trop long");
+        if (vdVote.idVote != null) throw new MauvaisVote("Id non nul. La BD doit le gérer");
 
+        // Un votant ne vote pas deux fois pour la meme question
+
+
+        // Ajout
+        vdVote.idVote = maBD.monDao().insertVote(vdVote);
     }
 
     

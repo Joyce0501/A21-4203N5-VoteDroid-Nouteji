@@ -4,15 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.votedroid.bd.BD;
 import com.example.votedroid.databinding.ActivityVoteBinding;
+import com.example.votedroid.exceptions.MauvaisVote;
+import com.example.votedroid.exceptions.MauvaiseQuestion;
+import com.example.votedroid.modele.VDQuestion;
+import com.example.votedroid.modele.VDVote;
+import com.example.votedroid.service.ServiceImplementation;
 
 public class VoteActivity extends AppCompatActivity {
 
     private  ActivityVoteBinding binding;
+    private ServiceImplementation service;
+    private BD maBD;
 
     RatingBar ratingBar;
     float ratevalue;
@@ -39,6 +48,17 @@ public class VoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent Liste = new Intent(VoteActivity.this,MainActivity.class);
                 startActivity(Liste);
+                try{
+                    VDVote monVote = new VDVote();
+                    monVote.nomVotant = binding.editNom.getText().toString();
+                    service.creerVote(monVote);
+                }
+                catch (MauvaisVote monVote){
+//                    Log.e("CREERQUESTION", "Impossible de créer la question : " + maQuestion.getMessage());
+                    Toast.makeText(VoteActivity.this, monVote.getMessage(), Toast.LENGTH_SHORT).show();
+                    Intent vote = new Intent(VoteActivity.this,VoteActivity.class);
+                    startActivity(vote);
+                }
             }
         });
 
