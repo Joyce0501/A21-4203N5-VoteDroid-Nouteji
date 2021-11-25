@@ -52,6 +52,7 @@ public class ServiceImplementation {
         if (vdVote.nomVotant == null || vdVote.nomVotant.trim().length() == 0) throw new MauvaisVote("Nom du votant inexistant");
         if (vdVote.nomVotant.trim().length() < 4) throw new MauvaisVote("Nom du votant trop court");
         if (vdVote.nomVotant.trim().length() > 256) throw new MauvaisVote("Nom du votant trop long");
+        if (vdVote.nbreVote == 0 ) throw new MauvaisVote("On ne peut pas avoir de votes nuls");
         if (vdVote.idVote != null) throw new MauvaisVote("Id non nul. La BD doit le gérer");
 
         // Un votant ne vote pas deux fois pour la meme question

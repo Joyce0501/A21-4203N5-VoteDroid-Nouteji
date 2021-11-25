@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class VDQuestion {
+
     @PrimaryKey(autoGenerate = true)
     public Long idQuestion;
 

@@ -132,7 +132,6 @@ public class TestsApplication {
         vote.idVote = 5L;
         service.creerVote(vote);
 
-
         Assert.fail("Exception MauvaisVote non lancée");
     }
 
@@ -143,6 +142,15 @@ public class TestsApplication {
         service.creerVote(vote);
 
         Assert.assertNotNull(vote.idVote);
+    }
+
+    @Test(expected = MauvaisVote.class)
+    public void ajoutVoteNul() throws MauvaisVote {
+        VDVote vote = new VDVote();
+        vote.nbreVote = null;
+        service.creerVote(vote);
+
+        Assert.fail("Exception MauvaisVote non lancée");
     }
 
     /*

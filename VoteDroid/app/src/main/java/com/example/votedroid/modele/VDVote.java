@@ -22,6 +22,9 @@ public class VDVote {
     public String nomVotant;
 
     @ColumnInfo
+    public int nbreVote;
+
+    @ColumnInfo
     public Long questionId;
 
 

@@ -30,7 +30,7 @@ public class VoteActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote);
-
+        service = ServiceImplementation.getInstance(null);
         ratingBar = findViewById(R.id.etoiles);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -42,7 +42,9 @@ public class VoteActivity extends AppCompatActivity {
         binding = ActivityVoteBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        Long monId = getIntent().getLongExtra("id",-1);
+        String leTexte = getIntent().getStringExtra("texte");
+        binding.LaQuestion.setText(leTexte);
         binding.buttonVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,16 +53,21 @@ public class VoteActivity extends AppCompatActivity {
                 try{
                     VDVote monVote = new VDVote();
                     monVote.nomVotant = binding.editNom.getText().toString();
+                    monVote.nbreVote = binding.etoiles.getNumStars();
+//                    binding.LaQuestion ==   getIntent().getStringExtra("texte");
+                    monVote.questionId = monId;
+                    binding.LaQuestion.setText(leTexte);
                     service.creerVote(monVote);
                 }
                 catch (MauvaisVote monVote){
-//                    Log.e("CREERQUESTION", "Impossible de créer la question : " + maQuestion.getMessage());
                     Toast.makeText(VoteActivity.this, monVote.getMessage(), Toast.LENGTH_SHORT).show();
                     Intent vote = new Intent(VoteActivity.this,VoteActivity.class);
+                    binding.LaQuestion.setText(leTexte);
                     startActivity(vote);
                 }
             }
         });
+
 
     }
 }

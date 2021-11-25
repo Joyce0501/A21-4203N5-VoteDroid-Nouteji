@@ -49,7 +49,6 @@ public class QuestionActivity extends AppCompatActivity {
                     service.creerQuestion(maQuestion);
                 }
                 catch (MauvaiseQuestion maQuestion){
-//                    Log.e("CREERQUESTION", "Impossible de créer la question : " + maQuestion.getMessage());
                     Toast.makeText(QuestionActivity.this, maQuestion.getMessage(), Toast.LENGTH_SHORT).show();
                     Intent question = new Intent(QuestionActivity.this,QuestionActivity.class);
                     startActivity(question);

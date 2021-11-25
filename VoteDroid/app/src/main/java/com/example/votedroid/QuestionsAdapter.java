@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.votedroid.databinding.ActivityQuestionBinding;
 import com.example.votedroid.modele.VDQuestion;
+import com.example.votedroid.modele.VDVote;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.ViewHolder>  {
 
     public List<VDQuestion> list;
+    public List<VDVote> listv;
 
 
     /**
@@ -66,10 +68,13 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
         // contents of the view with that element
         VDQuestion questionactuel = list.get(position);
         viewHolder.textViewQuestion.setText(questionactuel.texteQuestion);
+
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent voter = new Intent(view.getContext(),VoteActivity.class);
+                voter.putExtra("id",questionactuel.idQuestion);
+                voter.putExtra("texte",questionactuel.texteQuestion);
                 view.getContext().startActivity(voter);
             }
         });
