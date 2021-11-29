@@ -50,24 +50,20 @@ public class VoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent Liste = new Intent(VoteActivity.this,MainActivity.class);
                 startActivity(Liste);
+                binding.LaQuestion.setText(leTexte);
                 try{
                     VDVote monVote = new VDVote();
                     monVote.nomVotant = binding.editNom.getText().toString();
                     monVote.nbreVote = binding.etoiles.getNumStars();
-//                    binding.LaQuestion ==   getIntent().getStringExtra("texte");
                     monVote.questionId = monId;
-                    binding.LaQuestion.setText(leTexte);
                     service.creerVote(monVote);
                 }
                 catch (MauvaisVote monVote){
                     Toast.makeText(VoteActivity.this, monVote.getMessage(), Toast.LENGTH_SHORT).show();
                     Intent vote = new Intent(VoteActivity.this,VoteActivity.class);
-                    binding.LaQuestion.setText(leTexte);
                     startActivity(vote);
                 }
             }
         });
-
-
     }
 }

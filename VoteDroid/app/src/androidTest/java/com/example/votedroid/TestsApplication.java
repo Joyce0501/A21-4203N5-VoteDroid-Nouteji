@@ -13,8 +13,10 @@ import org.junit.runner.RunWith;
 import com.example.votedroid.bd.BD;
 import com.example.votedroid.bd.BD;
 
+import com.example.votedroid.exceptions.MauvaisVote;
 import com.example.votedroid.exceptions.MauvaiseQuestion;
 import com.example.votedroid.modele.VDQuestion;
+import com.example.votedroid.modele.VDVote;
 import com.example.votedroid.service.ServiceImplementation;
 
 @RunWith(AndroidJUnit4.class)
@@ -147,7 +149,7 @@ public class TestsApplication {
     @Test(expected = MauvaisVote.class)
     public void ajoutVoteNul() throws MauvaisVote {
         VDVote vote = new VDVote();
-        vote.nbreVote = null;
+        vote.nbreVote = 0;
         service.creerVote(vote);
 
         Assert.fail("Exception MauvaisVote non lancée");

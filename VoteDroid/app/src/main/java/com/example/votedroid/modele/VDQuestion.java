@@ -10,4 +10,6 @@ public class VDQuestion {
     public Long idQuestion;
 
     public String texteQuestion;
+
+    public VDVote LeVote;
 }
