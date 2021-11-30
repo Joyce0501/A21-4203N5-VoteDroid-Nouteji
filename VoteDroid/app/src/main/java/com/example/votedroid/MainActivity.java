@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void remplirRecycler(){
-        for(VDQuestion unequestion : maBD.monDao().toutesLesQuestions())
+        for(VDQuestion unequestion : service.toutesLesQuestions())
         {
             VDQuestion q = new VDQuestion();
             q.texteQuestion = unequestion.texteQuestion;

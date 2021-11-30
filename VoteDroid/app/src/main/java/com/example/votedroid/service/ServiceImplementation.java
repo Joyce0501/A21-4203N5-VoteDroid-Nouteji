@@ -41,7 +41,7 @@ public class ServiceImplementation {
 
 
         // Doublon du texte de la question
-        for (VDQuestion q : toutesLesQuestions()){
+        for (VDQuestion q : toutesLesQuestions() ){
             if (q.texteQuestion.toUpperCase().equals(vdQuestion.texteQuestion.toUpperCase())){
                     throw new MauvaiseQuestion("Question existante");
             }
@@ -66,18 +66,40 @@ public class ServiceImplementation {
 
         // 'il n'y a pas de vote existant pour cette question et cette personne
 
-        // vdVote.nomVotant = "null";
-        // vdVote.questionId = null;
+//         vdVote.nomVotant = "null";
+//         vdVote.questionId = null;
 
+        // verifie si l'id de la question existe
+        boolean idquestionexiste = false;
+        for (VDQuestion V : toutesLesQuestions()) {
+            if (V.idQuestion.equals(vdVote.questionId)){
+                idquestionexiste = true;
+                break;
+            }
+        }
+        if(!idquestionexiste)
+        {
+            throw new MauvaisVote("Id de la question n'existe pas");
+        }
+
+        //verifie si un votant est associe a cette question
+        for (VDVote vote : maBD.monDao().tousLesVotesPourUneQuestion(vdVote.questionId)) {
+
+            if(vdVote.nomVotant.equals(vote.nomVotant))
+            {
+                throw new MauvaisVote("il ya deja un votant pour cette question");
+            }
+        }
         // Ajout
 
-        // vdVote.idVote = maBD.monDao().insertVote(vdVote);
+        vdVote.idVote = maBD.monDao().insertVote(vdVote);
     }
 
     public List<VDQuestion> toutesLesQuestions() {
         //TODO Trier la liste reçue en BD par nombre de votes et la retourner
 
-        return new ArrayList<>();
+       List<VDQuestion> listeQuestions = new ArrayList<>(maBD.monDao().toutesLesQuestions());
+        return  listeQuestions;
 
     }
 

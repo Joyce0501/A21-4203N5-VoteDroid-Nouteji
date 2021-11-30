@@ -24,16 +24,14 @@ public abstract class MonDao {
     @Query("SELECT * FROM VDVote")
     public abstract List<VDVote> tousLesVotes();
 
+    @Query("SELECT * FROM VDVote WHERE questionId =:idQuestion")
+    public abstract List<VDVote> tousLesVotesPourUneQuestion(Long idQuestion);
+
+
     @Insert
     public abstract Long insertVote(VDVote vote);
 
-    @Transaction
-    public Long creerQuestionVote(VDQuestion q, List<VDVote> vs){
-        Long idQuestion = this.insertQuestion(q);
-        for (VDVote v : vs){
-            v.questionId= idQuestion;
-            this.insertVote(v);
-        }
-        return idQuestion;
-    }
+
 }
+
+

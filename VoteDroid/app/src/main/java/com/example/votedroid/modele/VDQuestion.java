@@ -11,5 +11,4 @@ public class VDQuestion {
 
     public String texteQuestion;
 
-    public VDVote LeVote;
 }

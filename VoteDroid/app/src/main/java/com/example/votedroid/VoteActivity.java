@@ -48,18 +48,18 @@ public class VoteActivity extends AppCompatActivity {
         binding.buttonVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent Liste = new Intent(VoteActivity.this,MainActivity.class);
-                startActivity(Liste);
                 binding.LaQuestion.setText(leTexte);
+                VDVote monVote = new VDVote();
+                monVote.nomVotant = binding.editNom.getText().toString();
+                monVote.nbreVote = binding.etoiles.getNumStars();
+                monVote.questionId = monId;
                 try{
-                    VDVote monVote = new VDVote();
-                    monVote.nomVotant = binding.editNom.getText().toString();
-                    monVote.nbreVote = binding.etoiles.getNumStars();
-                    monVote.questionId = monId;
                     service.creerVote(monVote);
+                    Intent Liste = new Intent(VoteActivity.this,MainActivity.class);
+                    startActivity(Liste);
                 }
-                catch (MauvaisVote monVote){
-                    Toast.makeText(VoteActivity.this, monVote.getMessage(), Toast.LENGTH_SHORT).show();
+                catch (MauvaisVote Exception){
+                    Toast.makeText(VoteActivity.this, Exception.getMessage(), Toast.LENGTH_SHORT).show();
                     Intent vote = new Intent(VoteActivity.this,VoteActivity.class);
                     startActivity(vote);
                 }
