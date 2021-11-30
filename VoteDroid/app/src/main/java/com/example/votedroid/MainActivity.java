@@ -85,12 +85,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void remplirRecycler(){
-        for(VDQuestion unequestion : service.toutesLesQuestions())
-        {
-            VDQuestion q = new VDQuestion();
-            q.texteQuestion = unequestion.texteQuestion;
-            adapter.list.add(q);
-        }
+        adapter.list.clear();
+        adapter.list.addAll(service.toutesLesQuestions());
        adapter.notifyDataSetChanged();
     }
 
@@ -100,5 +96,20 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.SupQuestions) {
+            service.SupprimerQuestions();
+            remplirRecycler();
+            return true;
+        }
+        if (id == R.id.SupVotes) {
+            service.SupprimerVotes();
+            remplirRecycler();
+            return true;
+        }
+        Intent Supprimer = new Intent(MainActivity.this, MainActivity.class);
+        startActivity(Supprimer);
+        return super.onOptionsItemSelected(item);
+    }
 }

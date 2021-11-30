@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.example.votedroid.bd.BD;
 import com.example.votedroid.databinding.ActivityVoteBinding;
@@ -29,8 +30,13 @@ public class VoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        maBD =  Room.databaseBuilder(getApplicationContext(), BD.class, "BDQuestions")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
+        service = ServiceImplementation.getInstance(maBD);
+
         setContentView(R.layout.activity_vote);
-        service = ServiceImplementation.getInstance(null);
         ratingBar = findViewById(R.id.etoiles);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -48,10 +54,11 @@ public class VoteActivity extends AppCompatActivity {
         binding.buttonVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RatingBar rbar = (RatingBar) findViewById(R.id.etoiles);
                 binding.LaQuestion.setText(leTexte);
                 VDVote monVote = new VDVote();
                 monVote.nomVotant = binding.editNom.getText().toString();
-                monVote.nbreVote = binding.etoiles.getNumStars();
+                monVote.nbreVote = (int)rbar.getRating();
                 monVote.questionId = monId;
                 try{
                     service.creerVote(monVote);

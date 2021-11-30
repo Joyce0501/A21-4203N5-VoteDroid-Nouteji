@@ -30,7 +30,7 @@ public class TestsApplication {
     public void createDb() {
         Context context = ApplicationProvider.getApplicationContext();
         bd = Room.inMemoryDatabaseBuilder(context, BD.class).build();
-        service = ServiceImplementation.getInstance(bd);
+        service = new ServiceImplementation(bd);
     }
 
 
@@ -112,7 +112,7 @@ public class TestsApplication {
     @Test(expected = MauvaisVote.class)
     public void ajoutNomVotantKOCourt() throws MauvaisVote {
         VDVote vote = new VDVote();
-        vote.nomVotant = "aa";
+        vote.nomVotant = "aaaa";
         service.creerVote(vote);
 
         Assert.fail("Exception MauvaisVote non lancée");
@@ -154,6 +154,7 @@ public class TestsApplication {
 
         Assert.fail("Exception MauvaisVote non lancée");
     }
+
 
     /*
     @After

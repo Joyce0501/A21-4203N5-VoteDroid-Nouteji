@@ -12,24 +12,29 @@ import com.example.votedroid.modele.VDVote;
 import java.util.List;
 
 @Dao
-public abstract class MonDao {
+public interface MonDao {
     @Insert
-    public abstract Long insertQuestion(VDQuestion v);
+    public  Long insertQuestion(VDQuestion v);
 
     //TODO Compléter les autres actions"
 
     @Query("SELECT * FROM VDQuestion")
-    public abstract List<VDQuestion> toutesLesQuestions();
+    public List<VDQuestion> toutesLesQuestions();
 
     @Query("SELECT * FROM VDVote")
-    public abstract List<VDVote> tousLesVotes();
+    public  List<VDVote> tousLesVotes();
 
     @Query("SELECT * FROM VDVote WHERE questionId =:idQuestion")
-    public abstract List<VDVote> tousLesVotesPourUneQuestion(Long idQuestion);
+    public  List<VDVote> tousLesVotesPourUneQuestion(Long idQuestion);
 
+    @Query("DELETE FROM VDQuestion")
+    void deleteQuestions();
+
+    @Query("DELETE FROM VDVote")
+    void deleteVotes();
 
     @Insert
-    public abstract Long insertVote(VDVote vote);
+    public  Long insertVote(VDVote vote);
 
 
 }

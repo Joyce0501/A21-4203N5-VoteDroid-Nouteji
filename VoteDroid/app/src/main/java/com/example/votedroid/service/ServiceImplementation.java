@@ -15,7 +15,7 @@ public class ServiceImplementation {
     private static ServiceImplementation single_instance = null;
     private BD maBD;
 
-    private ServiceImplementation(BD maBD){
+    public ServiceImplementation(BD maBD){
         this.maBD = maBD;
     }
 
@@ -59,40 +59,40 @@ public class ServiceImplementation {
         if (vdVote.nomVotant.trim().length() > 256) throw new MauvaisVote("Nom du votant trop long");
         if (vdVote.nbreVote == 0 ) throw new MauvaisVote("On ne peut pas avoir de votes nuls");
         if (vdVote.idVote != null) throw new MauvaisVote("Id non nul. La BD doit le gérer");
-        if (vdVote.questionId != null) throw new MauvaisVote("Id non nul. La BD doit le gérer.Il existe deja un vote pour cette question");
-        
 
-        // Un votant ne vote pas deux fois pour la meme question
+        // verifie si l'id de la question existe
+//        boolean idquestionexiste = false;
+//        for (VDQuestion V : toutesLesQuestions()) {
+//            if (V.idQuestion.equals(vdVote.questionId)){
+//                idquestionexiste = true;
+//                break;
+//            }
+//        }
+//        if(!idquestionexiste)
+//        {
+//            throw new MauvaisVote("Id de la question n'existe pas");
+//        }
+//
+        //verifie si un votant est associe a cette question
+//        for (VDVote vote : maBD.monDao().tousLesVotesPourUneQuestion(vdVote.questionId)) {
+//
+//            if(vdVote.nomVotant.toUpperCase().equals(vote.nomVotant.toUpperCase()))
+//            {
+//                throw new MauvaisVote("Vous avez déja");
+//            }
+//        }
+
 
         // 'il n'y a pas de vote existant pour cette question et cette personne
 
-//         vdVote.nomVotant = "null";
-//         vdVote.questionId = null;
-
-        // verifie si l'id de la question existe
-        boolean idquestionexiste = false;
-        for (VDQuestion V : toutesLesQuestions()) {
-            if (V.idQuestion.equals(vdVote.questionId)){
-                idquestionexiste = true;
-                break;
+        for (VDVote v: maBD.monDao().tousLesVotes()){
+            if (v.questionId.equals(vdVote.questionId) && v.nomVotant.toUpperCase().equals(vdVote.nomVotant.toUpperCase()) ){
+                throw new MauvaisVote("Vous avez deja voté");
             }
         }
-        if(!idquestionexiste)
-        {
-            throw new MauvaisVote("Id de la question n'existe pas");
-        }
 
-        //verifie si un votant est associe a cette question
-        for (VDVote vote : maBD.monDao().tousLesVotesPourUneQuestion(vdVote.questionId)) {
-
-            if(vdVote.nomVotant.equals(vote.nomVotant))
-            {
-                throw new MauvaisVote("il ya deja un votant pour cette question");
-            }
-        }
         // Ajout
-
-        vdVote.idVote = maBD.monDao().insertVote(vdVote);
+        maBD.monDao().insertVote(vdVote);
     }
 
     public List<VDQuestion> toutesLesQuestions() {
@@ -103,7 +103,17 @@ public class ServiceImplementation {
 
     }
 
-    
+    public void SupprimerVotes()
+    {
+        maBD.monDao().deleteVotes();
+    }
+
+    public void SupprimerQuestions()
+    {
+        maBD.monDao().deleteQuestions();
+    }
+
+
     public float moyenneVotes(VDQuestion question) {
         return 0;
     }
