@@ -115,7 +115,16 @@ public class ServiceImplementation {
 
 
     public float moyenneVotes(VDQuestion question) {
-        return 0;
+
+         int total =0;
+         float moyenne = 0;
+        List<VDVote> votes = maBD.monDao().tousLesVotesPourUneQuestion(question.idQuestion);
+        for(VDVote vote : votes)
+        {
+            total += vote.nbreVote;
+            moyenne = total / votes.size();
+        }
+        return moyenne;
     }
 
     
@@ -125,8 +134,19 @@ public class ServiceImplementation {
         float total2 = 0;
         int nbreVote = 0;
         float moyenne = moyenneVotes(question);
-//        List<VDVote> votes = maBD.monDao().tousLesVotesPourUneQuestion();
-        return 0;
+        List<VDVote> votes = maBD.monDao().tousLesVotesPourUneQuestion(question.idQuestion);
+
+        for(VDVote vote : votes)
+        {
+            if(vote.questionId == question.idQuestion)
+            {
+                total1 += (vote.nbreVote * Math.pow(nbreVote-moyenne,2));
+                total2 += vote.nbreVote;
+                nbreVote++;
+            }
+
+        }
+        return (float) Math.sqrt(total1/total2);
     }
 
     

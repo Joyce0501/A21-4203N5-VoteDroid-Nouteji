@@ -12,7 +12,6 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:orientation="vertical"
-        android:text="@string/resultats_preambule"
         android:textSize="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"

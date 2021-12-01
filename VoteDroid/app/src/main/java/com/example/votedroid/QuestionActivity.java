@@ -41,15 +41,16 @@ public class QuestionActivity extends AppCompatActivity {
         binding.buttonPoser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent accueil = new Intent(QuestionActivity.this,MainActivity.class);
-                startActivity(accueil);
+                VDQuestion maQuestion = new VDQuestion();
+                maQuestion.texteQuestion = binding.edit.getText().toString();
+
                 try{
-                    VDQuestion maQuestion = new VDQuestion();
-                    maQuestion.texteQuestion = binding.edit.getText().toString();
                     service.creerQuestion(maQuestion);
+                    Intent accueil = new Intent(QuestionActivity.this,MainActivity.class);
+                    startActivity(accueil);
                 }
-                catch (MauvaiseQuestion maQuestion){
-                    Toast.makeText(QuestionActivity.this, maQuestion.getMessage(), Toast.LENGTH_SHORT).show();
+                catch (MauvaiseQuestion Exception){
+                    Toast.makeText(QuestionActivity.this, Exception.getMessage(), Toast.LENGTH_SHORT).show();
                     Intent question = new Intent(QuestionActivity.this,QuestionActivity.class);
                     startActivity(question);
                 }

@@ -1,10 +1,13 @@
 package com.example.votedroid;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.votedroid.bd.BD;
+import com.example.votedroid.databinding.ActivityMainBinding;
 import com.example.votedroid.databinding.ActivityResultsBinding;
 import com.example.votedroid.databinding.ActivityVoteBinding;
 import com.example.votedroid.modele.VDVote;
@@ -30,11 +33,22 @@ public class ResultsActivity extends AppCompatActivity {
     List<VDVote> votes;
     private ServiceImplementation service;
     private BD maBD;
-    private ActivityResultsBinding binding;
+    ActivityResultsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        binding = ActivityResultsBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
+        maBD =  Room.databaseBuilder(getApplicationContext(), BD.class, "BDQuestions")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
+        service = ServiceImplementation.getInstance(maBD);
+
         setContentView(R.layout.activity_results);
         setTitle("Résultats");
 
@@ -80,8 +94,8 @@ public class ResultsActivity extends AppCompatActivity {
             setData(dataGraph);
 
             binding.LaQuestion.setText(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",-1)).texteQuestion);
-            binding.LaMoyenne.setText(Float.toString(service.moyenneVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",-1)))));
-            binding.EcartType.setText(Float.toString(service.ecartTypeVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",-1)))));
+            binding.LaMoyenne.setText(Float.toString(service.moyenneVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",0)))));
+            binding.EcartType.setText(Float.toString(service.ecartTypeVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",0)))));
 
     }
     private void setData(Map<Integer, Integer> datas) {
