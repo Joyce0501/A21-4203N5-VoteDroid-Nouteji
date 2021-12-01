@@ -120,6 +120,12 @@ public class ServiceImplementation {
 
     
     public float ecartTypeVotes(VDQuestion question) {
+
+        float total1 = 0;
+        float total2 = 0;
+        int nbreVote = 0;
+        float moyenne = moyenneVotes(question);
+//        List<VDVote> votes = maBD.monDao().tousLesVotesPourUneQuestion();
         return 0;
     }
 

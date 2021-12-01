@@ -4,6 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.votedroid.bd.BD;
+import com.example.votedroid.databinding.ActivityResultsBinding;
+import com.example.votedroid.databinding.ActivityVoteBinding;
+import com.example.votedroid.modele.VDVote;
+import com.example.votedroid.service.ServiceImplementation;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -15,18 +20,25 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class ResultsActivity extends AppCompatActivity {
 
     BarChart chart;
+    List<VDVote> votes;
+    private ServiceImplementation service;
+    private BD maBD;
+    private ActivityResultsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
         setTitle("Résultats");
+
+        votes = maBD.monDao().tousLesVotesPourUneQuestion((long) (getIntent().getIntExtra("idposition",-1) + 1));
 
 
         chart = findViewById(R.id.chart);
@@ -57,20 +69,20 @@ public class ResultsActivity extends AppCompatActivity {
 
 
         /* Data and function call to bind the data to the graph */
-        Map<Integer, Integer> dataGraph = new HashMap<Integer, Integer>() {{
-            put(0,0);
-            put(1,0);
-            put(2,0);
-            put(3,2);
-            put(4,1);
-            put(5,4);
-          /*  put(5, 10);
-            put(3, 3);
-            put(7, 2);
-            put(2, 1);
-            put(9, 0); */
-        }};
-        setData(dataGraph);
+        Map<Integer, Integer> dataGraph = new HashMap<Integer, Integer>();
+
+            int montant = 0;
+            for(VDVote unvote : votes)
+            {
+                dataGraph.put(montant,unvote.nbreVote);
+                montant++;
+            }
+            setData(dataGraph);
+
+            binding.LaQuestion.setText(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",-1)).texteQuestion);
+            binding.LaMoyenne.setText(Float.toString(service.moyenneVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",-1)))));
+            binding.EcartType.setText(Float.toString(service.ecartTypeVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",-1)))));
+
     }
     private void setData(Map<Integer, Integer> datas) {
 
