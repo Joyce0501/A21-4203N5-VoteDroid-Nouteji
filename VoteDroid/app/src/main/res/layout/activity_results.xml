@@ -13,25 +13,48 @@
         android:layout_height="50dp"
         android:orientation="vertical"
         android:textSize="20dp"
+        android:text="La question"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         tools:context=".VoteActivity" />
 
-    <TextView
-        android:id="@+id/LaMoyenne"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Moyenne:                              4.29"
-        android:layout_margin="20dp"
-        tools:context=".VoteActivity" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="20dp">
 
-    <TextView
-        android:id="@+id/EcartType"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginLeft="20dp"
-        android:text="Écart type:                             0.88"
-        tools:context=".VoteActivity" />
+            <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Moyenne:"
+        android:textSize="20dp" />
+            <TextView
+            android:id="@+id/LaMoyenne"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="4.29" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="20dp">
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Écart type:"
+            android:textSize="20dp" />
+        <TextView
+            android:id="@+id/EcartType"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="0.88" />
+    </LinearLayout>
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart"

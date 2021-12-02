@@ -1,5 +1,6 @@
 package com.example.votedroid;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
@@ -36,17 +37,18 @@ public class ResultsActivity extends AppCompatActivity {
     ActivityResultsBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        binding = ActivityResultsBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
         maBD =  Room.databaseBuilder(getApplicationContext(), BD.class, "BDQuestions")
                 .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build();
+
+        binding = ActivityResultsBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
         service = ServiceImplementation.getInstance(maBD);
 
         setContentView(R.layout.activity_results);
@@ -80,8 +82,6 @@ public class ResultsActivity extends AppCompatActivity {
         chart.getDescription().setEnabled(false);
         chart.getAxisRight().setEnabled(false);
 
-
-
         /* Data and function call to bind the data to the graph */
         Map<Integer, Integer> dataGraph = new HashMap<Integer, Integer>();
 
@@ -96,7 +96,7 @@ public class ResultsActivity extends AppCompatActivity {
             binding.LaQuestion.setText(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",-1)).texteQuestion);
             binding.LaMoyenne.setText(Float.toString(service.moyenneVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",0)))));
             binding.EcartType.setText(Float.toString(service.ecartTypeVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",0)))));
-
+            
     }
     private void setData(Map<Integer, Integer> datas) {
 

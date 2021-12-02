@@ -117,14 +117,12 @@ public class ServiceImplementation {
     public float moyenneVotes(VDQuestion question) {
 
          int total =0;
-         float moyenne = 0;
         List<VDVote> votes = maBD.monDao().tousLesVotesPourUneQuestion(question.idQuestion);
         for(VDVote vote : votes)
         {
             total += vote.nbreVote;
-            moyenne = total / votes.size();
         }
-        return moyenne;
+        return total / votes.size();
     }
 
     
@@ -144,7 +142,6 @@ public class ServiceImplementation {
                 total2 += vote.nbreVote;
                 nbreVote++;
             }
-
         }
         return (float) Math.sqrt(total1/total2);
     }
