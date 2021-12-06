@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface MonDao {
     @Insert
-    public  Long insertQuestion(VDQuestion v);
+    public Long insertQuestion(VDQuestion v);
 
     //TODO Compléter les autres actions"
 
@@ -22,10 +22,10 @@ public interface MonDao {
     public List<VDQuestion> toutesLesQuestions();
 
     @Query("SELECT * FROM VDVote")
-    public  List<VDVote> tousLesVotes();
+    public List<VDVote> tousLesVotes();
 
-    @Query("SELECT * FROM VDVote WHERE questionId =:idQuestion")
-    public  List<VDVote> tousLesVotesPourUneQuestion(Long idQuestion);
+    @Query("SELECT * FROM VDVote WHERE questionId = :idQuestion")
+    public List<VDVote> tousLesVotesPourUneQuestion(Long idQuestion);
 
     @Query("DELETE FROM VDQuestion")
     void deleteQuestions();
@@ -34,7 +34,7 @@ public interface MonDao {
     void deleteVotes();
 
     @Insert
-    public  Long insertVote(VDVote vote);
+    public Long insertVote(VDVote vote);
 
 
 }

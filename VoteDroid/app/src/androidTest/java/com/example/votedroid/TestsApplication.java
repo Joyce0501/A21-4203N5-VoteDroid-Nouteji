@@ -15,6 +15,7 @@ import com.example.votedroid.bd.BD;
 
 import com.example.votedroid.exceptions.MauvaisVote;
 import com.example.votedroid.exceptions.MauvaiseQuestion;
+import com.example.votedroid.exceptions.MauvaiseSuppression;
 import com.example.votedroid.modele.VDQuestion;
 import com.example.votedroid.modele.VDVote;
 import com.example.votedroid.service.ServiceImplementation;
@@ -153,6 +154,51 @@ public class TestsApplication {
         service.creerVote(vote);
 
        Assert.fail("Exception MauvaisVote non lancée");
+    }
+
+    @Test
+    public void OrdreDescendant() throws MauvaisVote, MauvaiseQuestion {
+
+         VDQuestion question = new VDQuestion();
+         VDQuestion question1 = new VDQuestion();
+         VDQuestion question2 = new VDQuestion();
+
+        question.texteQuestion = "Ca va bien?";
+        question1.texteQuestion = "Oui merci et toi?";
+        question2.texteQuestion = "Ca va bien merci";
+
+        service.creerQuestion(question);
+        service.creerQuestion(question1);
+        service.creerQuestion(question2);
+
+         VDVote vote = new VDVote();
+         VDVote vote1 = new VDVote();
+         VDVote vote2 = new VDVote();
+
+         vote.nbreVote = 2;
+         vote.nomVotant = "Georges";
+         vote.questionId = question2.idQuestion;
+
+        vote1.nbreVote = 2;
+        vote1.nomVotant = "Alice";
+        vote1.questionId = question2.idQuestion;
+
+        vote2.nbreVote = 2;
+        vote2.nomVotant = "Alicia";
+        vote2.questionId = question1.idQuestion;
+
+        service.creerVote(vote);
+        service.creerVote(vote1);
+        service.creerVote(vote2);
+
+        Assert.assertEquals("Ca va bien merci",service.toutesLesQuestions().get(0).texteQuestion);
+        Assert.assertEquals("Oui merci et toi?",service.toutesLesQuestions().get(1).texteQuestion);
+        Assert.assertEquals("Ca va bien?",service.toutesLesQuestions().get(2).texteQuestion);
+    }
+
+    @Test
+    public void Supprimer() throws MauvaiseSuppression {
+        
     }
 
 

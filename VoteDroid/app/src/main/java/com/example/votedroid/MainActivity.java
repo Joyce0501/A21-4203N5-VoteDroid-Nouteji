@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -21,7 +22,9 @@ import androidx.room.Room;
 
 import com.example.votedroid.bd.BD;
 import com.example.votedroid.databinding.ActivityMainBinding;
+import com.example.votedroid.exceptions.MauvaisVote;
 import com.example.votedroid.exceptions.MauvaiseQuestion;
+import com.example.votedroid.exceptions.MauvaiseSuppression;
 import com.example.votedroid.modele.VDQuestion;
 import com.example.votedroid.service.ServiceImplementation;
 
@@ -99,17 +102,28 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.SupQuestions) {
-            service.SupprimerQuestions();
+            try {
+                service.SupprimerQuestions();
+            }
+            catch (MauvaiseSuppression mauvaiseSuppression) {
+                Toast.makeText(MainActivity.this, mauvaiseSuppression.getMessage(), Toast.LENGTH_SHORT).show();
+            }
             remplirRecycler();
             return true;
         }
         if (id == R.id.SupVotes) {
-            service.SupprimerVotes();
+            try {
+                service.SupprimerVotes();
+            }
+            catch (MauvaiseSuppression mauvaiseSuppression) {
+                Toast.makeText(MainActivity.this, mauvaiseSuppression.getMessage(), Toast.LENGTH_SHORT).show();
+            }
             remplirRecycler();
             return true;
         }
         Intent Supprimer = new Intent(MainActivity.this, MainActivity.class);
         startActivity(Supprimer);
         return super.onOptionsItemSelected(item);
+
     }
 }

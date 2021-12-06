@@ -3,6 +3,7 @@ package com.example.votedroid.service;
 import com.example.votedroid.bd.BD;
 import com.example.votedroid.exceptions.MauvaisVote;
 import com.example.votedroid.exceptions.MauvaiseQuestion;
+import com.example.votedroid.exceptions.MauvaiseSuppression;
 import com.example.votedroid.modele.VDQuestion;
 import com.example.votedroid.modele.VDVote;
 
@@ -120,25 +121,26 @@ public class ServiceImplementation {
        return maBD.monDao().tousLesVotesPourUneQuestion(idQuestion);
     }
 
-    public void SupprimerVotes()
+    public void SupprimerVotes() throws MauvaiseSuppression
     {
+        if(maBD.monDao().tousLesVotes() == null || maBD.monDao().tousLesVotes().size() == 0) throw new MauvaiseSuppression("Aucun vote existant");
         maBD.monDao().deleteVotes();
     }
 
-    public void SupprimerQuestions()
+    public void SupprimerQuestions() throws MauvaiseSuppression
     {
+        if(maBD.monDao().toutesLesQuestions() == null || maBD.monDao().toutesLesQuestions().size() == 0) throw new MauvaiseSuppression("Aucune question existante");
         maBD.monDao().deleteQuestions();
     }
 
     public float moyenneVotes(VDQuestion question) {
-
-         int total =0;
+        float total = 0;
         List<VDVote> votes = maBD.monDao().tousLesVotesPourUneQuestion(question.idQuestion);
         for(VDVote vote : votes)
         {
             total += vote.nbreVote;
         }
-        return total / votes.size();
+        return (total / votes.size());
     }
 
     
