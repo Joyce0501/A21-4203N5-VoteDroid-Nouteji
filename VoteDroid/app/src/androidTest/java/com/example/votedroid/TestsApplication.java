@@ -112,7 +112,7 @@ public class TestsApplication {
     @Test(expected = MauvaisVote.class)
     public void ajoutNomVotantKOCourt() throws MauvaisVote {
         VDVote vote = new VDVote();
-        vote.nomVotant = "aaaa";
+        vote.nomVotant = "aaa";
         service.creerVote(vote);
 
         Assert.fail("Exception MauvaisVote non lancée");

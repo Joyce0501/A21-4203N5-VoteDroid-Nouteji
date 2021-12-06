@@ -53,17 +53,14 @@ public class VoteActivity extends AppCompatActivity {
         setContentView(view);
         Long monId = getIntent().getLongExtra("id",-1);
 
-       // String leTexte = getIntent().getStringExtra("texte");
-       // binding.LaQuestion.setText(leTexte);
-        //TextView textView3 = binding.LaQuestion;
-        //textView3.setText(leTexte);
-        //textView3.setText(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("texte",-1)).texteQuestion);
+        String leTexte = getIntent().getStringExtra("texte");
+        binding.LaQuestion.setText(leTexte);
+
 
         binding.buttonVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RatingBar rbar = (RatingBar) findViewById(R.id.etoiles);
-             //   binding.LaQuestion.setText(leTexte);
                 VDVote monVote = new VDVote();
                 monVote.nomVotant = binding.editNom.getText().toString();
                 monVote.nbreVote = (int)rbar.getRating();
@@ -76,8 +73,6 @@ public class VoteActivity extends AppCompatActivity {
                 }
                 catch (MauvaisVote Exception){
                     Toast.makeText(VoteActivity.this, Exception.getMessage(), Toast.LENGTH_SHORT).show();
-                    Intent vote = new Intent(VoteActivity.this,VoteActivity.class);
-                    startActivity(vote);
                 }
             }
         });

@@ -7,6 +7,8 @@ import com.example.votedroid.modele.VDQuestion;
 import com.example.votedroid.modele.VDVote;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +59,8 @@ public class ServiceImplementation {
         if (vdVote.nomVotant == null || vdVote.nomVotant.trim().length() == 0) throw new MauvaisVote("Nom du votant inexistant");
         if (vdVote.nomVotant.trim().length() < 4) throw new MauvaisVote("Nom du votant trop court, Minimum quatre caracteres");
         if (vdVote.nomVotant.trim().length() > 256) throw new MauvaisVote("Nom du votant trop long");
-        if (vdVote.nbreVote == 0 ) throw new MauvaisVote("On ne peut pas avoir de votes nuls");
+        if (vdVote.nbreVote < 0 ) throw new MauvaisVote("Le vote est trop petit");
+        if ( vdVote.nbreVote > 5) throw new MauvaisVote("Le vote est trop grand");
         if (vdVote.idVote != null) throw new MauvaisVote("Id non nul. La BD doit le gérer");
 
         // verifie si l'id de la question existe
@@ -93,15 +96,28 @@ public class ServiceImplementation {
 
         // Ajout
 
-        maBD.monDao().insertVote(vdVote);
+        vdVote.idVote = maBD.monDao().insertVote(vdVote);
     }
 
     public List<VDQuestion> toutesLesQuestions() {
         //TODO Trier la liste reçue en BD par nombre de votes et la retourner
 
        List<VDQuestion> listeQuestions = new ArrayList<>(maBD.monDao().toutesLesQuestions());
-        return  listeQuestions;
 
+        Collections.sort(listeQuestions, new Comparator<VDQuestion>() {
+            @Override
+            public int compare(VDQuestion V1, VDQuestion V2) {
+                return touteslesvotespourunequestion(V2.idQuestion).size() - touteslesvotespourunequestion(V1.idQuestion).size();
+            }
+        });
+
+         return  listeQuestions;
+
+    }
+
+    public List<VDVote> touteslesvotespourunequestion(Long idQuestion)
+    {
+       return maBD.monDao().tousLesVotesPourUneQuestion(idQuestion);
     }
 
     public void SupprimerVotes()

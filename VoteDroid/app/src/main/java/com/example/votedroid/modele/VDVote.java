@@ -6,7 +6,9 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = @ForeignKey(entity = VDQuestion.class,
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(foreignKeys = @ForeignKey(onDelete = CASCADE,entity = VDQuestion.class,
         parentColumns = "idQuestion",
         childColumns = "questionId"),
         indices = {@Index("questionId")}

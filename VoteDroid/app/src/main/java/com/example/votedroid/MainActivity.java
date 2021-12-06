@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     private void remplirRecycler(){
         adapter.list.clear();
         adapter.list.addAll(service.toutesLesQuestions());
-       adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
