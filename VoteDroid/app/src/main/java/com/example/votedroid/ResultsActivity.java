@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.votedroid.bd.BD;
 import com.example.votedroid.databinding.ActivityMainBinding;
@@ -93,9 +94,15 @@ public class ResultsActivity extends AppCompatActivity {
             }
             setData(dataGraph);
 
-            binding.LaQuestion.setText(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",-1)).texteQuestion);
-            binding.LaMoyenne.setText(Float.toString(service.moyenneVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",0)))));
-            binding.EcartType.setText(Float.toString(service.ecartTypeVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",0)))));
+        TextView textView1 = (TextView)findViewById(R.id.LaMoyenne);
+        textView1.setText(Float.toString(service.moyenneVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",0)))));
+
+        TextView textView2 = (TextView)findViewById(R.id.EcartType);
+        textView2.setText(Float.toString(service.ecartTypeVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",0)))));
+
+        TextView textView3 = (TextView)findViewById(R.id.LaQuestion);
+        textView3.setText(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",-1)).texteQuestion);
+
             
     }
     private void setData(Map<Integer, Integer> datas) {

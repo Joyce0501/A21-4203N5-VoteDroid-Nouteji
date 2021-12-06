@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -38,6 +39,8 @@ public class VoteActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_vote);
         ratingBar = findViewById(R.id.etoiles);
+        TextView textView3 = (TextView)findViewById(R.id.LaQuestion);
+        textView3.setText(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("texte",0)).texteQuestion);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
@@ -49,17 +52,23 @@ public class VoteActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         Long monId = getIntent().getLongExtra("id",-1);
-        String leTexte = getIntent().getStringExtra("texte");
-        binding.LaQuestion.setText(leTexte);
+
+       // String leTexte = getIntent().getStringExtra("texte");
+       // binding.LaQuestion.setText(leTexte);
+        //TextView textView3 = binding.LaQuestion;
+        //textView3.setText(leTexte);
+        //textView3.setText(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("texte",-1)).texteQuestion);
+
         binding.buttonVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RatingBar rbar = (RatingBar) findViewById(R.id.etoiles);
-                binding.LaQuestion.setText(leTexte);
+             //   binding.LaQuestion.setText(leTexte);
                 VDVote monVote = new VDVote();
                 monVote.nomVotant = binding.editNom.getText().toString();
                 monVote.nbreVote = (int)rbar.getRating();
                 monVote.questionId = monId;
+
                 try{
                     service.creerVote(monVote);
                     Intent Liste = new Intent(VoteActivity.this,MainActivity.class);

@@ -152,7 +152,7 @@ public class TestsApplication {
         vote.nbreVote = 0;
         service.creerVote(vote);
 
-        Assert.fail("Exception MauvaisVote non lancée");
+       Assert.fail("Exception MauvaisVote non lancée");
     }
 
 
@@ -162,4 +162,5 @@ public class TestsApplication {
         bd.close();
     }
     */
+
 }

@@ -92,6 +92,7 @@ public class ServiceImplementation {
         }
 
         // Ajout
+
         maBD.monDao().insertVote(vdVote);
     }
 
@@ -112,7 +113,6 @@ public class ServiceImplementation {
     {
         maBD.monDao().deleteQuestions();
     }
-
 
     public float moyenneVotes(VDQuestion question) {
 
