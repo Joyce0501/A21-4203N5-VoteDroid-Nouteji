@@ -10,6 +10,7 @@ import com.example.votedroid.modele.VDVote;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -166,6 +167,15 @@ public class ServiceImplementation {
 
     
     public Map<Integer, Integer> distributionVotes(VDQuestion question) {
-        return null;
+
+        Map<Integer, Integer> dataGraph = new HashMap<Integer, Integer>();
+        List<VDVote> votes = maBD.monDao().tousLesVotesPourUneQuestion(question.idQuestion);
+        int montant = 0;
+        for(VDVote unvote : votes)
+        {
+            dataGraph.put(montant,unvote.nbreVote);
+            montant++;
+        }
+        return dataGraph;
     }
 }

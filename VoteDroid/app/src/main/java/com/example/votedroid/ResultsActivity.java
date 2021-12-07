@@ -57,7 +57,6 @@ public class ResultsActivity extends AppCompatActivity {
 
         votes = maBD.monDao().tousLesVotesPourUneQuestion((long) (getIntent().getIntExtra("idposition",-1) + 1));
 
-
         chart = findViewById(R.id.chart);
 
 
@@ -83,16 +82,7 @@ public class ResultsActivity extends AppCompatActivity {
         chart.getDescription().setEnabled(false);
         chart.getAxisRight().setEnabled(false);
 
-        /* Data and function call to bind the data to the graph */
-        Map<Integer, Integer> dataGraph = new HashMap<Integer, Integer>();
-
-            int montant = 0;
-            for(VDVote unvote : votes)
-            {
-                dataGraph.put(montant,unvote.nbreVote);
-                montant++;
-            }
-            setData(dataGraph);
+        setData(service.distributionVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",0))));
 
         TextView textView1 = (TextView)findViewById(R.id.LaMoyenne);
         textView1.setText(Float.toString(service.moyenneVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",0)))));
