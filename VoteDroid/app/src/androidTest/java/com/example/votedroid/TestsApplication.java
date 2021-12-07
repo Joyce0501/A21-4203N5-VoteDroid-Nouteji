@@ -156,6 +156,29 @@ public class TestsApplication {
        Assert.fail("Exception MauvaisVote non lancée");
     }
 
+    @Test(expected = MauvaisVote.class)
+    public void ajoutVotantExiste() throws MauvaisVote, MauvaiseQuestion{
+
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "une femme s'en vient";
+        service.creerQuestion(question);
+
+        VDVote vote1 = new VDVote();
+        vote1.nomVotant = "Joycie";
+        vote1.nbreVote = 2;
+        vote1.questionId = question.idQuestion;
+
+        VDVote vote2 = new VDVote();
+        vote1.nomVotant = "JOYcie";
+        vote1.nbreVote = 4;
+        vote2.questionId = question.idQuestion;
+
+        service.creerVote(vote1);
+        service.creerVote(vote2);
+
+        Assert.fail("Exception MauvaisVote non lancée");
+    }
+
     @Test
     public void OrdreDescendant() throws MauvaisVote, MauvaiseQuestion {
 
@@ -197,10 +220,54 @@ public class TestsApplication {
     }
 
     @Test
-    public void Supprimer() throws MauvaiseSuppression {
+    public void SupprimerVoteOK() throws MauvaiseSuppression, MauvaiseQuestion, MauvaisVote {
+
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Salut cava";
+        service.creerQuestion(question);
+
+        VDVote vote = new VDVote();
+        vote.nomVotant = "test";
+        vote.nbreVote = 3;
+        vote.questionId = question.idQuestion;
+        service.creerVote(vote);
+
+        service.SupprimerVotes();
+
+        Assert.assertEquals(0,bd.monDao().tousLesVotes().size());
         
     }
 
+    @Test(expected = MauvaiseSuppression.class)
+    public void SupprimerVotekO() throws MauvaiseSuppression {
+
+        VDVote vote = new VDVote();
+        service.SupprimerVotes();
+
+        Assert.fail("Exception MauvaisNote non lancée");
+    }
+
+    @Test
+    public void SupprimerQuestionOK() throws MauvaiseSuppression, MauvaiseQuestion, MauvaisVote {
+
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Oui merci";
+        service.creerQuestion(question);
+        
+        service.SupprimerQuestions();
+
+        Assert.assertEquals(0,bd.monDao().toutesLesQuestions().size());
+
+    }
+
+    @Test(expected = MauvaiseSuppression.class)
+    public void SupprimerQuestionKO() throws MauvaiseSuppression {
+
+        VDQuestion question = new VDQuestion();
+        service.SupprimerQuestions();
+
+        Assert.fail("Exception MauvaisNote non lancée");
+    }
 
     /*
     @After
