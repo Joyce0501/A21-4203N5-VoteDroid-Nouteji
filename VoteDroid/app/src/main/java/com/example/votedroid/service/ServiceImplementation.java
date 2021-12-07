@@ -65,29 +65,6 @@ public class ServiceImplementation {
         if ( vdVote.nbreVote > 5) throw new MauvaisVote("Le vote est trop grand");
         if (vdVote.idVote != null) throw new MauvaisVote("Id non nul. La BD doit le gérer");
 
-        // verifie si l'id de la question existe
-//        boolean idquestionexiste = false;
-//        for (VDQuestion V : toutesLesQuestions()) {
-//            if (V.idQuestion.equals(vdVote.questionId)){
-//                idquestionexiste = true;
-//                break;
-//            }
-//        }
-//        if(!idquestionexiste)
-//        {
-//            throw new MauvaisVote("Id de la question n'existe pas");
-//        }
-//
-        //verifie si un votant est associe a cette question
-//        for (VDVote vote : maBD.monDao().tousLesVotesPourUneQuestion(vdVote.questionId)) {
-//
-//            if(vdVote.nomVotant.toUpperCase().equals(vote.nomVotant.toUpperCase()))
-//            {
-//                throw new MauvaisVote("Vous avez déja");
-//            }
-//        }
-
-
         // 'il n'y a pas de vote existant pour cette question et cette personne
 
         for (VDVote v: maBD.monDao().tousLesVotes()){
@@ -112,14 +89,17 @@ public class ServiceImplementation {
                 return touteslesvotespourunequestion(V2.idQuestion).size() - touteslesvotespourunequestion(V1.idQuestion).size();
             }
         });
-
          return  listeQuestions;
-
     }
 
     public List<VDVote> touteslesvotespourunequestion(Long idQuestion)
     {
        return maBD.monDao().tousLesVotesPourUneQuestion(idQuestion);
+    }
+
+    public List<VDVote> touteslesvotes()
+    {
+        return maBD.monDao().tousLesVotes();
     }
 
     public void SupprimerVotes() throws MauvaiseSuppression
@@ -148,21 +128,14 @@ public class ServiceImplementation {
     public float ecartTypeVotes(VDQuestion question) {
 
         float total1 = 0;
-        float total2 = 0;
-        int nbreVote = 0;
         float moyenne = moyenneVotes(question);
         List<VDVote> votes = maBD.monDao().tousLesVotesPourUneQuestion(question.idQuestion);
 
         for(VDVote vote : votes)
         {
-            if(vote.questionId == question.idQuestion)
-            {
-                total1 += (vote.nbreVote * Math.pow(nbreVote-moyenne,2));
-                total2 += vote.nbreVote;
-                nbreVote++;
-            }
+            total1 += Math.pow(vote.nbreVote-moyenne,2);
         }
-        return (float) Math.sqrt(total1/total2);
+        return (float) Math.sqrt(total1/votes.size());
     }
 
     

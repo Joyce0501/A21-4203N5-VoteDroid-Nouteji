@@ -82,16 +82,16 @@ public class ResultsActivity extends AppCompatActivity {
         chart.getDescription().setEnabled(false);
         chart.getAxisRight().setEnabled(false);
 
-        setData(service.distributionVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",0))));
+        setData(service.distributionVotes(maBD.monDao().toutesLesQuestions().get((int)getIntent().getLongExtra("idposition",0) - 1)));
 
         TextView textView1 = (TextView)findViewById(R.id.LaMoyenne);
-        textView1.setText(Float.toString(service.moyenneVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",0)))));
+        textView1.setText(Float.toString(service.moyenneVotes(maBD.monDao().toutesLesQuestions().get((int)getIntent().getLongExtra("idposition",0) - 1))));
 
         TextView textView2 = (TextView)findViewById(R.id.EcartType);
-        textView2.setText(Float.toString(service.ecartTypeVotes(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",0)))));
+        textView2.setText(Float.toString(service.ecartTypeVotes(maBD.monDao().toutesLesQuestions().get((int)getIntent().getLongExtra("idposition",0) - 1))));
 
         TextView textView3 = (TextView)findViewById(R.id.LaQuestion);
-        textView3.setText(maBD.monDao().toutesLesQuestions().get(getIntent().getIntExtra("idposition",-1)).texteQuestion);
+        textView3.setText(maBD.monDao().toutesLesQuestions().get((int) getIntent().getLongExtra("idposition",-1) - 1).texteQuestion);
 
             
     }

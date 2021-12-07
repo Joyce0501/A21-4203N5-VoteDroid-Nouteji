@@ -70,22 +70,24 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
         VDQuestion questionactuel = list.get(position);
         viewHolder.textViewQuestion.setText(questionactuel.texteQuestion);
 
+        // Vote
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent voter = new Intent(view.getContext(),VoteActivity.class);
-                voter.putExtra("idposition",position);
+                voter.putExtra("idposition",questionactuel.idQuestion);
                 voter.putExtra("id",questionactuel.idQuestion);
                 voter.putExtra("texte",questionactuel.texteQuestion);
                 view.getContext().startActivity(voter);
             }
         });
 
+        // Image
         viewHolder.Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent results = new Intent(view.getContext(),ResultsActivity.class);
-                results.putExtra("idposition",position);
+                results.putExtra("idposition",questionactuel.idQuestion);
                 view.getContext().startActivity(results);
             }
         });

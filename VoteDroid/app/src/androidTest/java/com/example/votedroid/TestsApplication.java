@@ -20,6 +20,11 @@ import com.example.votedroid.modele.VDQuestion;
 import com.example.votedroid.modele.VDVote;
 import com.example.votedroid.service.ServiceImplementation;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @RunWith(AndroidJUnit4.class)
 public class TestsApplication {
 
@@ -102,27 +107,48 @@ public class TestsApplication {
     }
 
     @Test(expected = MauvaisVote.class)
-    public void ajoutNomVotantKOVide() throws MauvaisVote {
+    public void ajoutNomVotantKOVide() throws MauvaisVote, MauvaiseQuestion {
+
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Ca marche pet";
+        service.creerQuestion(question);
+
         VDVote vote = new VDVote();
         vote.nomVotant = "";
+        vote.nbreVote = 1;
+        vote.questionId = question.idQuestion;
         service.creerVote(vote);
 
         Assert.fail("Exception MauvaisVote non lancée");
     }
 
     @Test(expected = MauvaisVote.class)
-    public void ajoutNomVotantKOCourt() throws MauvaisVote {
+    public void ajoutNomVotantKOCourt() throws MauvaisVote, MauvaiseQuestion {
+
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Ca marche";
+        service.creerQuestion(question);
+
         VDVote vote = new VDVote();
         vote.nomVotant = "aaa";
+        vote.nbreVote = 0;
+        vote.questionId = question.idQuestion;
         service.creerVote(vote);
 
         Assert.fail("Exception MauvaisVote non lancée");
     }
 
     @Test(expected = MauvaisVote.class)
-    public void ajoutNomVotantKOLong() throws MauvaisVote {
+    public void ajoutNomVotantKOLong() throws MauvaisVote, MauvaiseQuestion {
+
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Ca marche petit";
+        service.creerQuestion(question);
+
         VDVote vote = new VDVote();
         for (int i = 0 ; i < 256 ; i ++) vote.nomVotant += "aa";
+        vote.nbreVote = 0;
+        vote.questionId = question.idQuestion;
         service.creerVote(vote);
 
         Assert.fail("Exception MauvaisVote non lancée");
@@ -131,7 +157,7 @@ public class TestsApplication {
     @Test(expected = MauvaisVote.class)
     public void ajoutVoteKOIDFixe() throws MauvaisVote {
         VDVote vote = new VDVote();
-        vote.nomVotant = "aa";
+        vote.nomVotant = "aaaaa";
         vote.idVote = 5L;
         service.creerVote(vote);
 
@@ -139,9 +165,16 @@ public class TestsApplication {
     }
 
     @Test
-    public void ajoutVoteOK() throws MauvaisVote {
+    public void ajoutVoteOK() throws MauvaisVote, MauvaiseQuestion {
+
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "non je ne veux pas";
+        service.creerQuestion(question);
+
         VDVote vote = new VDVote();
         vote.nomVotant = "joyce";
+        vote.nbreVote = 3;
+        vote.questionId = question.idQuestion;
         service.creerVote(vote);
 
         Assert.assertNotNull(vote.idVote);
@@ -150,7 +183,6 @@ public class TestsApplication {
     @Test(expected = MauvaisVote.class)
     public void ajoutVoteNul() throws MauvaisVote {
         VDVote vote = new VDVote();
-        vote.nbreVote = 0;
         service.creerVote(vote);
 
        Assert.fail("Exception MauvaisVote non lancée");
@@ -253,10 +285,17 @@ public class TestsApplication {
         VDQuestion question = new VDQuestion();
         question.texteQuestion = "Oui merci";
         service.creerQuestion(question);
-        
+
+        VDVote vote = new VDVote();
+        vote.nomVotant = "test";
+        vote.nbreVote = 3;
+        vote.questionId = question.idQuestion;
+        service.creerVote(vote);
+
         service.SupprimerQuestions();
 
         Assert.assertEquals(0,bd.monDao().toutesLesQuestions().size());
+        Assert.assertEquals(0,bd.monDao().tousLesVotes().size());
 
     }
 
@@ -267,6 +306,135 @@ public class TestsApplication {
         service.SupprimerQuestions();
 
         Assert.fail("Exception MauvaisNote non lancée");
+    }
+
+    @Test
+    public void EcartTypeKO() throws MauvaiseQuestion, MauvaisVote {
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Oui je veux une glace a la vanille";
+        service.creerQuestion(question);
+
+        VDVote vote = new VDVote();
+        vote.nomVotant = "Loli";
+        service.creerVote(vote);
+
+        Assert.assertEquals(Double.NaN,service.ecartTypeVotes(question),0.0000001);
+
+    }
+
+    @Test
+    public void EcartTypeOK() throws MauvaiseQuestion, MauvaisVote {
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Oui je veux";
+        service.creerQuestion(question);
+
+        VDVote vote = new VDVote();
+        vote.nomVotant = "joyKi";
+        vote.nbreVote = 5;
+        vote.questionId = question.idQuestion;
+        service.creerVote(vote);
+
+        VDVote vote1 = new VDVote();
+        vote1.nomVotant = "joyKia";
+        vote1.nbreVote = 3;
+        vote1.questionId = question.idQuestion;
+        service.creerVote(vote1);
+
+        Assert.assertEquals(1,service.ecartTypeVotes(question),0.0000001);
+
+    }
+
+    @Test
+    public void MoyenneKO() throws MauvaisVote, MauvaiseQuestion {
+
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Oui je veux une glace";
+        service.creerQuestion(question);
+
+        VDVote vote = new VDVote();
+        vote.nomVotant = "joyci";
+        service.creerVote(vote);
+
+        Assert.assertEquals(Double.NaN,service.moyenneVotes(question),0.0000001);
+    }
+
+    @Test
+    public void MoyenneOK() throws MauvaiseQuestion, MauvaisVote {
+
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Oui je veux une glace";
+        service.creerQuestion(question);
+
+        VDVote vote = new VDVote();
+        vote.nomVotant = "joyci";
+        vote.nbreVote = 5;
+        vote.questionId = question.idQuestion;
+        service.creerVote(vote);
+
+        VDVote vote1 = new VDVote();
+        vote1.nomVotant = "ludooo";
+        vote1.nbreVote = 3;
+        vote1.questionId = question.idQuestion;
+        service.creerVote(vote1);
+
+        Assert.assertEquals(4,service.moyenneVotes(question),0.0000001);
+
+    }
+
+    @Test
+    public void Distribution() throws MauvaiseQuestion, MauvaisVote {
+
+
+        VDQuestion question = new VDQuestion();
+        question.texteQuestion = "Oui je veux une poupee";
+        service.creerQuestion(question);
+
+        VDVote vote = new VDVote();
+        vote.nomVotant = "llllaaaaa";
+        vote.nbreVote = 5;
+        vote.questionId = question.idQuestion;
+        service.creerVote(vote);
+
+        VDVote vote1 = new VDVote();
+        vote1.nomVotant = "llliiii";
+        vote1.nbreVote = 5;
+        vote1.questionId = question.idQuestion;
+        service.creerVote(vote1);
+
+        VDVote vote2 = new VDVote();
+        vote2.nomVotant = "lllloooo";
+        vote2.nbreVote = 5;
+        vote2.questionId = question.idQuestion;
+        service.creerVote(vote2);
+
+        VDVote vote3 = new VDVote();
+        vote3.nomVotant = "llluuuu";
+        vote3.nbreVote = 4;
+        vote3.questionId = question.idQuestion;
+        service.creerVote(vote3);
+
+        VDVote vote4 = new VDVote();
+        vote4.nomVotant = "lllleeee";
+        vote4.nbreVote = 4;
+        vote4.questionId = question.idQuestion;
+        service.creerVote(vote4);
+
+        VDVote vote5 = new VDVote();
+        vote5.nomVotant = "llllyyyy";
+        vote5.nbreVote = 1;
+        vote5.questionId = question.idQuestion;
+        service.creerVote(vote5);
+
+        Map<Integer, Integer> Resultats = new HashMap<Integer, Integer>();
+        Resultats.put(0,5);
+        Resultats.put(1,5);
+        Resultats.put(2,5);
+        Resultats.put(3,4);
+        Resultats.put(4,4);
+        Resultats.put(5,1);
+
+        Assert.assertEquals(Resultats, service.distributionVotes(question));
+
     }
 
     /*
