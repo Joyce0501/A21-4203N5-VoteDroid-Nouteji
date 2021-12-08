@@ -80,7 +80,6 @@ public class TestsApplication {
         Assert.fail("Exception MauvaiseQuestion non lancée");
     }
 
-
     @Test
     public void ajoutQuestionOK() throws MauvaiseQuestion {
         VDQuestion question = new VDQuestion();
@@ -163,7 +162,7 @@ public class TestsApplication {
 
         Assert.fail("Exception MauvaisVote non lancée");
     }
-
+    
     @Test
     public void ajoutVoteOK() throws MauvaisVote, MauvaiseQuestion {
 
@@ -426,12 +425,12 @@ public class TestsApplication {
         service.creerVote(vote5);
 
         Map<Integer, Integer> Resultats = new HashMap<Integer, Integer>();
-        Resultats.put(0,5);
-        Resultats.put(1,5);
-        Resultats.put(2,5);
-        Resultats.put(3,4);
-        Resultats.put(4,4);
-        Resultats.put(5,1);
+        Resultats.put(0,0);
+        Resultats.put(1,1);
+        Resultats.put(2,0);
+        Resultats.put(3,0);
+        Resultats.put(4,2);
+        Resultats.put(5,3);
 
         Assert.assertEquals(Resultats, service.distributionVotes(question));
 

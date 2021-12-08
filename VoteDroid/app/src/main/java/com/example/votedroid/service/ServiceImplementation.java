@@ -143,12 +143,48 @@ public class ServiceImplementation {
 
         Map<Integer, Integer> dataGraph = new HashMap<Integer, Integer>();
         List<VDVote> votes = maBD.monDao().tousLesVotesPourUneQuestion(question.idQuestion);
-        int montant = 0;
+        int Var0 = 0;
+        int Var1 = 0;
+        int Var2 = 0;
+        int Var3 = 0;
+        int Var4 = 0;
+        int Var5 = 0;
         for(VDVote unvote : votes)
         {
-            dataGraph.put(montant,unvote.nbreVote);
-            montant++;
+            switch (unvote.nbreVote)
+            {
+                case 0 :
+                    Var0++;
+                    break;
+
+                case 1 :
+                    Var1++;
+                    break;
+
+                case 2 :
+                    Var2++;
+                    break;
+
+                case 3 :
+                    Var3++;
+                    break;
+
+                case 4 :
+                    Var4++;
+                    break;
+
+                case 5 :
+                    Var5++;
+                    break;
+
+            }
         }
+        dataGraph.put(0,Var0);
+        dataGraph.put(1,Var1);
+        dataGraph.put(2,Var2);
+        dataGraph.put(3,Var3);
+        dataGraph.put(4,Var4);
+        dataGraph.put(5,Var5);
         return dataGraph;
     }
 }
