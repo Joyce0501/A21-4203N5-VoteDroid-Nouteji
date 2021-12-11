@@ -27,6 +27,9 @@ public interface MonDao {
     @Query("SELECT * FROM VDVote WHERE questionId = :idQuestion")
     public List<VDVote> tousLesVotesPourUneQuestion(Long idQuestion);
 
+    @Query("SELECT * FROM VDQuestion WHERE IdQuestion = :idQuestion")
+    public VDQuestion questionPourResultat(Long idQuestion);
+
     @Query("DELETE FROM VDQuestion")
     void deleteQuestions();
 

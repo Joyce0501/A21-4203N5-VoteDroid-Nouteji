@@ -76,7 +76,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
             public void onClick(View view) {
                 Intent voter = new Intent(view.getContext(),VoteActivity.class);
                 voter.putExtra("idposition",questionactuel.idQuestion);
-                voter.putExtra("id",questionactuel.idQuestion);
                 voter.putExtra("texte",questionactuel.texteQuestion);
                 view.getContext().startActivity(voter);
             }

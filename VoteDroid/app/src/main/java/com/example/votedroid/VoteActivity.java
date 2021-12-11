@@ -51,7 +51,7 @@ public class VoteActivity extends AppCompatActivity {
         binding = ActivityVoteBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        Long monId = getIntent().getLongExtra("id",-1);
+        Long monId = getIntent().getLongExtra("idposition",-1);
 
         String leTexte = getIntent().getStringExtra("texte");
         binding.LaQuestion.setText(leTexte);

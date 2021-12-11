@@ -59,8 +59,8 @@ public class ServiceImplementation {
     public void creerVote(VDVote vdVote) throws MauvaisVote {
         // Validation
         if (vdVote.nomVotant == null || vdVote.nomVotant.trim().length() == 0) throw new MauvaisVote("Nom du votant inexistant");
-        if (vdVote.nomVotant.trim().length() < 4) throw new MauvaisVote("Nom du votant trop court, Minimum quatre caracteres");
-        if (vdVote.nomVotant.trim().length() > 256) throw new MauvaisVote("Nom du votant trop long");
+        if (vdVote.nomVotant.replace(" ", "").length() < 4) throw new MauvaisVote("Nom du votant trop court, Minimum quatre caracteres");
+        if (vdVote.nomVotant.replace(" ", "").length() > 256) throw new MauvaisVote("Nom du votant trop long");
         if (vdVote.nbreVote < 0 ) throw new MauvaisVote("Le vote est trop petit");
         if ( vdVote.nbreVote > 5) throw new MauvaisVote("Le vote est trop grand");
         if (vdVote.idVote != null) throw new MauvaisVote("Id non nul. La BD doit le gérer");

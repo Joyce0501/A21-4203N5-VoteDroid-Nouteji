@@ -51,8 +51,6 @@ public class QuestionActivity extends AppCompatActivity {
                 }
                 catch (MauvaiseQuestion Exception){
                     Toast.makeText(QuestionActivity.this, Exception.getMessage(), Toast.LENGTH_SHORT).show();
-                    Intent question = new Intent(QuestionActivity.this,QuestionActivity.class);
-                    startActivity(question);
                 }
             }
         });
